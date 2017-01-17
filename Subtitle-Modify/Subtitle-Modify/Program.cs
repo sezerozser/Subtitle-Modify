@@ -13,16 +13,23 @@ namespace Subtitle_Modify
 
         static void Main(string[] args)
         {
-            fileList = new List<FileInfo>();
-
-            DirWalker(args[0]);
-
-            foreach (FileInfo f in fileList)
+            if (args.Count() == 1)
             {
-                DosyaDuzelt(f);
+                fileList = new List<FileInfo>();
 
+                DirWalker(args[0]);
+
+                foreach (FileInfo f in fileList)
+                {
+                    ModifyFile(f);
+                }
             }
-
+            else
+            {
+                Console.WriteLine("This program removes any line start with <b> or <i> in a .srt file");
+                Console.WriteLine("To use the program supply folder path.");
+                Console.WriteLine("example usage: Subtitle-Modify c:\\Users\\Sezer\\Desktop\\CourseName");
+            }
         }
 
         private static void DirWalker(string path)
@@ -42,7 +49,7 @@ namespace Subtitle_Modify
                 DirWalker(d);
         }
 
-        private static void DosyaDuzelt(FileInfo source_f)
+        private static void ModifyFile(FileInfo source_f)
         {
             FileInfo target_f = new FileInfo(source_f.Directory.FullName + "\\temp.srt");
             string line;
